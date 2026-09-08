@@ -1,10 +1,9 @@
 import itertools
-import random
 import sys
 import threading
 import time
 from timeit import default_timer as timer
-
+from random_array_generator import random_array
 
 def animate_loading(stop_event, items):
     spinner = itertools.cycle(["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"])
@@ -19,20 +18,18 @@ def animate_loading(stop_event, items):
 
 
 # 1. Generate the random unsorted data
-print("Generating list...")
-arr = [random.randint(1, 5000) for _ in range(20000)]
-
-print(f"The Unsorted List is = {arr[:20]}....")
+arr = random_array()
 
 # 2. Setup and start the loading animation thread
 stop_loading = threading.Event()
 items = len(arr)
 loading_thread = threading.Thread(target=animate_loading, args=(stop_loading,items))
 
-start = timer()
+
 loading_thread.start()
 
 # 3. Execution of your Insertion Sort algorithm
+start = timer()
 for i in range(1, len(arr)):
     index = i
     current_value = arr.pop(i)
@@ -51,4 +48,5 @@ timetaken = end - start
 
 # 5. Output results
 print(f"The Sorted List is = {arr[:20]}....")
-print(f"The time taken for the function to execute is: {timetaken:.3f} s")
+print(f"The time taken for the function to execute is: {timetaken:.3f}s")
+
