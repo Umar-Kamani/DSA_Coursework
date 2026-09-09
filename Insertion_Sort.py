@@ -5,7 +5,7 @@ import time
 from timeit import default_timer as timer
 from Random_Array_Generator import random_array
 
-def insertionSort(arr):
+def insertionSort(arr, display_sorted = True):
 
     def animate_loading(stop_event, items):
         spinner = itertools.cycle(["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"])
@@ -16,7 +16,7 @@ def insertionSort(arr):
             sys.stdout.flush()
             time.sleep(0.1)
         # Clear the loading message once completed
-        sys.stdout.write("\r✅ Sorting Complete!\n\n")
+        sys.stdout.write("\r✅ Insertion Sort Complete!\n")
 
     # 1. Generate the random unsorted data
     #arr = random_array()
@@ -48,8 +48,9 @@ def insertionSort(arr):
     timetaken = end - start
 
     # 5. Output results
-    print(f"The Sorted List is = {arr[:20]}....")
-    print(f"The time taken for the function to execute is: {timetaken:.3f}s\n\n")
+    if display_sorted:
+        print(f"The Sorted List is = {arr[:20]}....")
+    print(f"The time taken for the Insertion Sort to execute is: {timetaken:.3f}s\n\n")
 
 
     return arr

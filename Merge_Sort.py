@@ -5,7 +5,7 @@ import time
 from timeit import default_timer as timer
 from Random_Array_Generator import random_array
 
-def MergeSort(arr):
+def MergeSort(arr, display_sorted = True):
     def animate_loading(stop_event, items):
         spinner = itertools.cycle(["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"])
         while not stop_event.is_set():
@@ -15,7 +15,7 @@ def MergeSort(arr):
             sys.stdout.flush()
             time.sleep(0.1)
         # Clear the loading message once completed
-        sys.stdout.write("\r✅ Sorting Complete!\n\n")
+        sys.stdout.write("\r✅ Merge Sort Complete!\n")
 
     #arr = random_array()
 
@@ -67,5 +67,6 @@ def MergeSort(arr):
     end = timer()
     timetaken = end - start
 
-    print(f"The Sorted List is = {result[:20]}....")
-    print(f"The time taken for the function to execute is: {timetaken:.3f}s")
+    if display_sorted:
+        print(f"The Sorted List is = {result[:20]}....")
+    print(f"The time taken for the Merge Sort to execute is: {timetaken:.3f}s")

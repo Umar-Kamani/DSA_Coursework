@@ -1,6 +1,8 @@
 from Insertion_Sort import insertionSort
 from Merge_Sort import MergeSort
+from Algorithm_Comparator import algorithm_comparator
 from Random_Array_Generator import random_array
+
 
 def main_menu(n, arr):
     print(f"\nCURRENT VALUE n = {n}")
@@ -18,17 +20,16 @@ def main_menu(n, arr):
          break
     if main_menu_choice == '1':
         print("\n")
-        insertionSort(arr)
+        insertionSort(arr, display_sorted=True)
         return main_menu(n, arr)
 
     elif main_menu_choice == '2':
         print("\n")
-        MergeSort(arr)
+        MergeSort(arr, display_sorted=True)
         return main_menu(n, arr)
 
     elif main_menu_choice == '3':
-        insertionSort(arr)
-        MergeSort(arr)
+        algorithm_comparator(arr)
         return main_menu(n, arr)
 
     elif main_menu_choice == '4':
