@@ -1,7 +1,7 @@
 import random
 
-def random_array():
+def random_array(n):
     print("Generating list...")
-    arr = [random.randint(1, 5000) for _ in range(20000)]
+    arr = [random.randint(1, 5000) for _ in range(n)]
     print(f"The Unsorted List is = {arr[:20]}....")
     return arr
