@@ -3,7 +3,7 @@ import sys
 import threading
 import time
 from timeit import default_timer as timer
-from random_array_generator import random_array
+from Random_Array_Generator import random_array
 
 def MergeSort(arr):
     def animate_loading(stop_event, items):
