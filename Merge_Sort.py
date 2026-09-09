@@ -1,40 +1,71 @@
-import numpy as np
+import itertools
+import sys
+import threading
+import time
+from timeit import default_timer as timer
+from random_array_generator import random_array
 
-arr = [5, 9, 8, 3, 1, 2,0]
+def MergeSort(arr):
+    def animate_loading(stop_event, items):
+        spinner = itertools.cycle(["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"])
+        while not stop_event.is_set():
+            sys.stdout.write(
+                f"\r{next(spinner)} Running Merge Sort on {items} items... Please wait..."
+            )
+            sys.stdout.flush()
+            time.sleep(0.1)
+        # Clear the loading message once completed
+        sys.stdout.write("\r✅ Sorting Complete!\n\n")
 
-def Merge_Sort(arr):
-    if len(arr) <= 1:
-        return arr
+    #arr = random_array()
 
-    slice_index = len(arr)//2
-    right_side = arr[slice_index:]
-    left_side = arr[:slice_index]
+    stop_loading = threading.Event()
+    items = len(arr)
+    loading_thread = threading.Thread(target=animate_loading, args=(stop_loading,items))
 
-    sorted_right = Merge_Sort(right_side)
-    sorted_left = Merge_Sort(left_side)
+    loading_thread.start()
+    start = timer()
+
+    def Merge_Sort(arr):
+        if len(arr) <= 1:
+            return arr
+
+        slice_index = len(arr)//2
+        right_side = arr[slice_index:]
+        left_side = arr[:slice_index]
+
+        sorted_right = Merge_Sort(right_side)
+        sorted_left = Merge_Sort(left_side)
 
 
-    return Merge(sorted_right, sorted_left)
+        return Merge(sorted_right, sorted_left)
 
 
-def Merge(sorted_right, sorted_left):
-    merged_list = []
-    i=0
-    j=0
+    def Merge(sorted_right, sorted_left):
+        merged_list = []
+        i=0
+        j=0
 
-    while i < len(sorted_right) and j < len(sorted_left):
-        if sorted_left[j] < sorted_right[i]:
-            merged_list.append(sorted_left[j])
-            j += 1
-        else:
-            merged_list.append(sorted_right[i])
-            i += 1
+        while i < len(sorted_right) and j < len(sorted_left):
+            if sorted_left[j] < sorted_right[i]:
+                merged_list.append(sorted_left[j])
+                j += 1
+            else:
+                merged_list.append(sorted_right[i])
+                i += 1
 
-    merged_list.extend(sorted_left[j:])
-    merged_list.extend(sorted_right[i:])
+        merged_list.extend(sorted_left[j:])
+        merged_list.extend(sorted_right[i:])
 
-    return merged_list
+        return merged_list
 
-sorted_arr = Merge_Sort(arr)
-print(sorted_arr)
+    stop_loading.set()
+    loading_thread.join()
 
+    result = Merge_Sort(arr)
+
+    end = timer()
+    timetaken = end - start
+
+    print(f"The Sorted List is = {result[:20]}....")
+    print(f"The time taken for the function to execute is: {timetaken:.3f}s")
