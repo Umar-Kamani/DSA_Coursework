@@ -1,0 +1,59 @@
+import itertools
+import sys
+import threading
+import time
+from timeit import default_timer as timer
+from Random_Array_Generator import random_array
+
+def insertionSort(arr, display_sorted = True):
+
+    def animate_loading(stop_event, items):
+        spinner = itertools.cycle(["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"])
+        while not stop_event.is_set():
+            sys.stdout.write(
+                f"\r{next(spinner)} Running Insertion Sort on {items} items... Please wait..."
+            )
+            sys.stdout.flush()
+            time.sleep(0.1)
+        # Clear the loading message once completed
+        sys.stdout.write("\r✅ Insertion Sort Complete!\n")
+
+    # 1. Generate the random unsorted data
+    #arr = random_array()
+
+    #2. Setup and start the loading animation thread
+    stop_loading = threading.Event()
+    items = len(arr)
+    loading_thread = threading.Thread(target=animate_loading, args=(stop_loading,items))
+
+
+    loading_thread.start()
+
+    # 3. Execution of your Insertion Sort algorithm
+
+    start = timer()
+    for i in range(1, len(arr)):
+        current_value = arr[i]
+        j = i - 1
+
+        while j >= 0 and arr[j] > current_value:
+            arr[j + 1] = arr[j]
+            j -= 1
+
+        arr[j + 1] = current_value
+    end = timer()
+
+    # 4. Stop the spinner cleanly after the loop finishes
+
+    stop_loading.set()
+    loading_thread.join()
+    timetaken = end - start
+
+    # 5. Output results
+    if display_sorted:
+        print(f"The Sorted List is = {arr[:20]}....")
+    print(f"The time taken for the Insertion Sort to execute is: {timetaken:.3f}s\n\n")
+
+
+    return arr
+
