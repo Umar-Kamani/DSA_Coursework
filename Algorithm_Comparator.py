@@ -1,4 +1,4 @@
-from Insertion_Sort import insertionSort
+from Insertion_Sort_old import insertionSort
 from Merge_Sort import MergeSort
 
 def algorithm_comparator(arr):
