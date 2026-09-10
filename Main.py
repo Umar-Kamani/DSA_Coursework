@@ -54,12 +54,14 @@ def main_menu(n, arr):
         bench_new.save_results(results)
         bench_new.calculate_doubling_ratios(results)
         bench_new.create_plot(results)
+        return main_menu(n, arr)
 
     elif main_menu_choice =='7':
         results = bench_old.run_benchmark()
         bench_old.save_results(results)
         bench_old.calculate_doubling_ratios(results)
         bench_old.create_plot(results)
+        return main_menu(n, arr)
 
     else:
          print("Thank you.")
