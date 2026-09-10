@@ -1,10 +1,10 @@
+import os
 import statistics
 import csv
 from timeit import default_timer as timer
 
 
 from Insertion_Sort_old import insertionSort as insertion_sort_old
-from Insertion_Sort_new import insertionSort as insertion_sort_new
 from Merge_Sort import MergeSort
 from Random_Array_Generator import random_array
 
@@ -20,7 +20,7 @@ def measure_insertion_random(n):
 
         arr = random_array(n)
         start = timer()
-        insertionSort(arr, display_sorted=False)
+        insertion_sort_old(arr, display_sorted=False)
         end = timer()
         times.append(end - start)
 
@@ -94,7 +94,9 @@ def run_benchmark():
 
 def save_results(results):
 
-    with open("benchmarking/benchmark_results.csv", "w", newline="") as file:
+    os.makedirs("benchmarking", exist_ok=True)
+    booking_file_exists = os.path.exists("benchmarking")
+    with open("benchmarking/benchmark_results_old.csv", "w", newline="") as file:
 
         writer = csv.DictWriter(
             file,
@@ -109,7 +111,7 @@ def save_results(results):
         writer.writeheader()
         writer.writerows(results)
 
-    print("\nResults saved to benchmark_results.csv")
+    print("\nResults saved to benchmark_results_old.csv")
 
 
 def calculate_doubling_ratios(results):
@@ -204,7 +206,7 @@ def create_plot(results):
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig("benchmarking/sorting_comparison.png", dpi=600)
+    plt.savefig("benchmarking/sorting_comparison_old.png", dpi=600)
 
     plt.show()
-    print("\nGraph saved to comparison.png")
+    print("\nGraph saved to sorting_comparison_old.png")
