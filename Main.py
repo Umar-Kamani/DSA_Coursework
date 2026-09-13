@@ -14,8 +14,8 @@ def main_menu(n, arr):
     print("3. Run Merge Sort")
     print("4. Run Insertion Sort Vs Merge Sort")
     print("5. Choose Value of n")
-    print("6. Run Benchmark (Using AI Corrected Insertion Sort")
-    print("7. Run Benchmark (Using Umar's Wonky Insertion Sort")
+    print("6. Run Benchmark (Using AI Corrected Insertion Sort)")
+    print("7. Run Benchmark (Using Umar's Wonky Insertion Sort)")
     print("8. Exit")
     print("Note: ** The 2 Insertion Sort Algorithms work the same when running a single sort **")
 
@@ -27,17 +27,17 @@ def main_menu(n, arr):
          break
     if main_menu_choice == '1':
         print("\n")
-        insertion_sort_new(arr, display_sorted=True)
+        insertion_sort_new(arr, display_sorted=True, show_spinner=True)
         return main_menu(n, arr)
 
     elif main_menu_choice == '2':
         print("\n")
-        insertion_sort_old(arr, display_sorted=True)
+        insertion_sort_old(arr, display_sorted=True, show_spinner=True)
         return main_menu(n, arr)
 
     elif main_menu_choice == '3':
         print("\n")
-        MergeSort(arr, display_sorted=True)
+        MergeSort(arr, display_sorted=True, show_spinner=True)
         return main_menu(n, arr)
 
     elif main_menu_choice == '4':
