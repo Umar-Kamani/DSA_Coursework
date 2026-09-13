@@ -5,26 +5,26 @@ import time
 from timeit import default_timer as timer
 from Random_Array_Generator import random_array
 
-def MergeSort(arr, display_sorted = True):
-    def animate_loading(stop_event, items):
-        spinner = itertools.cycle(["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"])
-        while not stop_event.is_set():
-            sys.stdout.write(
-                f"\r{next(spinner)} Running Merge Sort on {items} items... Please wait..."
-            )
-            sys.stdout.flush()
-            time.sleep(0.1)
-        # Clear the loading message once completed
-        sys.stdout.write("\r✅ Merge Sort Complete!\n")
+def MergeSort(arr, display_sorted = True, show_spinner=True):
+    if show_spinner:
+        def animate_loading(stop_event, items):
+            spinner = itertools.cycle(["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"])
+            while not stop_event.is_set():
+                sys.stdout.write(
+                    f"\r{next(spinner)} Running Merge Sort on {items} items... Please wait..."
+                )
+                sys.stdout.flush()
+                time.sleep(0.1)
+            # Clear the loading message once completed
+            sys.stdout.write("\r✅ Merge Sort Complete!\n")
 
-    #arr = random_array()
+        stop_loading = threading.Event()
 
-    stop_loading = threading.Event()
-    items = len(arr)
-    loading_thread = threading.Thread(target=animate_loading, args=(stop_loading,items))
+        loading_thread = threading.Thread(target=animate_loading, args=(stop_loading,items))
+        loading_thread.start()
+        items = len(arr)
 
-    loading_thread.start()
-    start = timer()
+
 
     def Merge_Sort(arr):
         if len(arr) <= 1:
@@ -59,11 +59,12 @@ def MergeSort(arr, display_sorted = True):
 
         return merged_list
 
-    stop_loading.set()
-    loading_thread.join()
+    if show_spinner:
+        stop_loading.set()
+        loading_thread.join()
 
+    start = timer()
     result = Merge_Sort(arr)
-
     end = timer()
     timetaken = end - start
 

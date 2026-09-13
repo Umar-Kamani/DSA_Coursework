@@ -4,7 +4,7 @@ import csv
 from timeit import default_timer as timer
 
 
-from Insertion_Sort_old import insertionSort
+from Insertion_Sort_new import insertionSort
 from Merge_Sort import MergeSort
 from Random_Array_Generator import random_array
 
@@ -20,7 +20,7 @@ def measure_insertion_random(n):
 
         arr = random_array(n)
         start = timer()
-        insertionSort(arr, display_sorted=False)
+        insertionSort(arr, display_sorted=False, show_spinner=False)
         end = timer()
         times.append(end - start)
 
@@ -35,7 +35,7 @@ def measure_merge_random(n):
         # Build the list BEFORE starting the timer
         arr = random_array(n)
         start = timer()
-        MergeSort(arr, display_sorted=False)
+        MergeSort(arr, display_sorted=False, show_spinner=False)
         end = timer()
         times.append(end - start)
 
@@ -49,7 +49,7 @@ def measure_insertion_sorted(n):
     for i in range(RUNS):
         arr = list(range(n))  # sequential sorted list, rebuilt each run
         start = timer()
-        insertionSort(arr, display_sorted=False)
+        insertionSort(arr, display_sorted=False, show_spinner=False)
         end = timer()
         times.append(end - start)
 
